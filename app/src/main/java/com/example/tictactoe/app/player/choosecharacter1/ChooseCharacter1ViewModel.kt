@@ -49,7 +49,7 @@ class ChooseCharacter1ViewModel(private val repository: Repository, private var 
     fun setPlayerOne(player: PlayerDTO){
         firstPlayer.playerId = player.playerId
         firstPlayer.playerName = player.playerName
-        firstPlayer.playerScore = player.playerScore
+        firstPlayer.playerScore = 0
     }
 
     fun validPlayerName(): Boolean {

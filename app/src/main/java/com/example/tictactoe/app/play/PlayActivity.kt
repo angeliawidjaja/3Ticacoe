@@ -74,6 +74,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
         intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
+        finish()
     }
 
     override fun onBackPressed() {
@@ -85,7 +86,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
         builder.setTitle("Game Result")
         builder.setMessage(playViewModel.getPlayModel().gameResultMessage)
         builder.setPositiveButton("Yes") {_,_ -> playViewModel.resetGame(); resetButtonColor(); resetButtonenableability()}
-        builder.setNegativeButton("No") {_,_ -> intentToMainScreen()}
+        builder.setNegativeButton("No") {_,_ -> playViewModel.resetGame(); intentToMainScreen()}
         val alertDialog: AlertDialog = builder.show()
         alertDialog.setCanceledOnTouchOutside(false)
     }
@@ -94,7 +95,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Stop The Game")
         builder.setMessage("Are you sure want to stop the game? Your current data won't be saved!")
-        builder.setPositiveButton("Yes") {_,_ -> intentToMainScreen()}
+        builder.setPositiveButton("Yes") {_,_ -> playViewModel.resetGame(); intentToMainScreen()}
         builder.setNegativeButton("No") {_,_ -> }
         val alertDialog: AlertDialog = builder.show()
         alertDialog.setCanceledOnTouchOutside(false)
