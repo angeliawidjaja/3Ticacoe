@@ -16,11 +16,6 @@ class PlayerViewModelFactory(private val repository : Repository, private val pl
                 repository
             ) as T
         }
-        else if (modelClass.isAssignableFrom(ChooseCharacter1ViewModel::class.java)){
-            return ChooseCharacter1ViewModel(
-                repository, playModel
-            ) as T
-        }
         else if(modelClass.isAssignableFrom(ChooseCharacter2ViewModel::class.java)){
             return ChooseCharacter2ViewModel(
                 repository, playModel

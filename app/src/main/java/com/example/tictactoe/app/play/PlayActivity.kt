@@ -17,29 +17,18 @@ import com.example.tictactoe.Repository
 import com.example.tictactoe.app.main.MainActivity
 import com.example.tictactoe.db.TicTacToeDatabase
 import com.example.tictactoe.databinding.ActivityPlayBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlayActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityPlayBinding
-    private lateinit var playViewModel : PlayViewModel
+    private val playViewModel by viewModel<PlayViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_play)
-        initViewModel()
         binding.lifecycleOwner = this
         initListener()
         binding.model = playViewModel.getPlayModel()
-    }
-
-    private fun initViewModel(){
-        val playerDao = TicTacToeDatabase.getInstance(application).playerDAO
-        val repository = Repository(playerDao)
-        val factory = PlayerViewModelFactory(repository, getPlayModelFromIntent())
-        playViewModel = ViewModelProvider(this, factory).get(PlayViewModel::class.java)
-    }
-
-    private fun getPlayModelFromIntent(): PlayModel {
-        return intent.getSerializableExtra("gameModel") as PlayModel
     }
 
     private fun initListener(){
@@ -78,7 +67,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                     v.isEnabled = false
                     playViewModel.handleGameRole(rowId, columnId)
                     if(playViewModel.getPlayModel().isGameOver){
-                        Toast.makeText(this, playViewModel.getPlayModel().firstPlayer!!.playerName + ": " + playViewModel.getPlayModel().firstPlayer!!.playerScore.toString() + " " + playViewModel.getPlayModel().firstPlayer!!.playerName + ": " + playViewModel.getPlayModel().secondPlayer!!.playerScore.toString(), Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, playViewModel.getPlayModel().firstPlayer!!.playerName + ": " + playViewModel.getPlayModel().secondPlayer!!.playerScore.toString() + " " + playViewModel.getPlayModel().firstPlayer!!.playerName + ": " + playViewModel.getPlayModel().secondPlayer!!.playerScore.toString(), Toast.LENGTH_LONG).show()
                         createPlayAgainAlertDialog()
                     }
                 }

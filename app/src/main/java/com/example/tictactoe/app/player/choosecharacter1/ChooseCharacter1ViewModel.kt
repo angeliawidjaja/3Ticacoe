@@ -25,10 +25,6 @@ class ChooseCharacter1ViewModel(private val repository: Repository, private var 
     private lateinit var currentPlayer : PlayerDTO
     private var firstPlayer: PlayerItemModel = PlayerItemModel()
 
-    fun getGameModel(): PlayModel{
-        return playModel
-    }
-
     fun submitData(){
         val name = inputName.value!!
         var id = players.value!!.size + 1
@@ -47,6 +43,7 @@ class ChooseCharacter1ViewModel(private val repository: Repository, private var 
         setPlayerOne(player)
         playModel.firstPlayer = firstPlayer
         inputName.value = player.playerName
+        invalidNotif.value = null
     }
 
     fun setPlayerOne(player: PlayerDTO){

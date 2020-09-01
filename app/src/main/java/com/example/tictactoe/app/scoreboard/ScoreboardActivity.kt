@@ -12,15 +12,16 @@ import com.example.tictactoe.Repository
 import com.example.tictactoe.app.play.PlayModel
 import com.example.tictactoe.databinding.ActivityScoreboardBinding
 import com.example.tictactoe.db.TicTacToeDatabase
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ScoreboardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScoreboardBinding
-    private lateinit var scoreboardViewModel: ScoreboardViewModel
+    private val scoreboardViewModel by viewModel<ScoreboardViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_scoreboard)
-        initViewModel()
+        binding.viewModel = scoreboardViewModel
         binding.lifecycleOwner = this
         initRecyclerView()
     }
@@ -28,14 +29,6 @@ class ScoreboardActivity : AppCompatActivity() {
     private fun initRecyclerView(){
         binding.rvScoreboard.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         displayScoreboardList()
-    }
-
-    private fun initViewModel(){
-        val playerDao = TicTacToeDatabase.getInstance(application).playerDAO
-        val repository = Repository(playerDao)
-        val factory = PlayerViewModelFactory(repository, PlayModel())
-        scoreboardViewModel = ViewModelProvider(this, factory).get(ScoreboardViewModel::class.java)
-        binding.viewModel = scoreboardViewModel
     }
 
     private fun displayScoreboardList(){
