@@ -1,4 +1,4 @@
-package com.example.tictactoe
+package com.example.tictactoe.db
 
 import androidx.lifecycle.LiveData
 import com.example.a3ticacoe.db.entities.PlayerDTO

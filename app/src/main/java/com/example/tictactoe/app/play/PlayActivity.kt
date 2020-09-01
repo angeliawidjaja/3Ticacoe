@@ -3,19 +3,14 @@ package com.example.tictactoe.app.play
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
-import com.example.tictactoe.PlayerViewModelFactory
 import com.example.tictactoe.R
-import com.example.tictactoe.Repository
 import com.example.tictactoe.app.main.MainActivity
-import com.example.tictactoe.db.TicTacToeDatabase
 import com.example.tictactoe.databinding.ActivityPlayBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -67,7 +62,7 @@ class PlayActivity : AppCompatActivity(), View.OnClickListener {
                     v.isEnabled = false
                     playViewModel.handleGameRole(rowId, columnId)
                     if(playViewModel.getPlayModel().isGameOver){
-                        Toast.makeText(this, playViewModel.getPlayModel().firstPlayer!!.playerName + ": " + playViewModel.getPlayModel().secondPlayer!!.playerScore.toString() + " " + playViewModel.getPlayModel().firstPlayer!!.playerName + ": " + playViewModel.getPlayModel().secondPlayer!!.playerScore.toString(), Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, playViewModel.getPlayModel().firstPlayer!!.playerName + ": " + playViewModel.getPlayModel().firstPlayer!!.playerScore.toString() + " " + playViewModel.getPlayModel().secondPlayer!!.playerName + ": " + playViewModel.getPlayModel().secondPlayer!!.playerScore.toString(), Toast.LENGTH_LONG).show()
                         createPlayAgainAlertDialog()
                     }
                 }

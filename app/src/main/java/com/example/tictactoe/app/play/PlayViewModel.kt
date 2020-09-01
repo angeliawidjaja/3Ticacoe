@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tictactoe.R
-import com.example.tictactoe.Repository
+import com.example.tictactoe.db.Repository
 import com.example.tictactoe.app.player.PlayerItemModel
 import kotlinx.coroutines.launch
 
@@ -53,12 +53,10 @@ class PlayViewModel(private val repository: Repository, private val playModel: P
                 if(playModel.boardCells[rowId][0] == playModel.boardCells[rowId][1] &&
                     playModel.boardCells[rowId][1] == playModel.boardCells[rowId][2]){
                     if(playModel.boardCells[rowId][0] == playModel.FIRST_PLAYER){
-                        Log.d("<TEST>", "Masuk 1")
                         handlePlayer1Win()
                         break;
                     }
                     if(playModel.boardCells[rowId][0] == playModel.SECOND_PLAYER){
-                        Log.d("<TEST>", "Masuk 2")
                         handlePlayer2Win()
                         break;
                     }
@@ -71,12 +69,10 @@ class PlayViewModel(private val repository: Repository, private val playModel: P
                 if(playModel.boardCells[0][columnId] == playModel.boardCells[1][columnId] &&
                     playModel.boardCells[1][columnId] == playModel.boardCells[2][columnId]){
                     if(playModel.boardCells[0][columnId] == playModel.FIRST_PLAYER){
-                        Log.d("<TEST>", "Masuk 3")
                         handlePlayer1Win()
                         break;
                     }
                     if(playModel.boardCells[0][columnId] == playModel.SECOND_PLAYER){
-                        Log.d("<TEST>", "Masuk 4")
                         handlePlayer2Win()
                         break;
                     }
@@ -88,11 +84,9 @@ class PlayViewModel(private val repository: Repository, private val playModel: P
             if((playModel.boardCells[0][0] == playModel.boardCells[1][1] && playModel.boardCells[1][1] == playModel.boardCells[2][2]) ||
                 (playModel.boardCells[0][2] == playModel.boardCells[1][1] && playModel.boardCells[1][1] == playModel.boardCells[2][0])){
                 if(playModel.boardCells[1][1] == playModel.FIRST_PLAYER){
-                    Log.d("<TEST>", "Masuk 5")
                     handlePlayer1Win()
                 }
                 if(playModel.boardCells[1][1] == playModel.SECOND_PLAYER){
-                    Log.d("<TEST>", "Masuk 6")
                     handlePlayer2Win()
                 }
             }
@@ -100,27 +94,25 @@ class PlayViewModel(private val repository: Repository, private val playModel: P
 
         if(!playModel.isGameOver){
             if(playModel.roundCount == 9){
-                Log.d("<TEST>", "Masuk 7")
                 handleGameDraw()
             }
             else{
-                Log.d("<TEST>", "Masuk 8")
                 moveToNextRound()
             }
         }
     }
 
     private fun handlePlayer1Win(){
-        playModel.firstPlayer!!.playerScore = playModel.firstPlayer!!.playerScore!!.plus(10)
-        playModel.secondPlayer!!.playerScore = playModel.secondPlayer!!.playerScore!!.minus(10)
+        playModel.firstPlayer!!.playerScore = playModel.firstPlayer!!.playerScore?.plus(10)
+        playModel.secondPlayer!!.playerScore = playModel.secondPlayer!!.playerScore?.minus(10)
         updateScore(playModel.firstPlayer!!, playModel.secondPlayer!!)
         playModel.isGameOver = true
         playModel.winner = playModel.FIRST_PLAYER
     }
 
     private fun handlePlayer2Win(){
-        playModel.secondPlayer!!.playerScore = playModel.secondPlayer!!.playerScore!!.plus(10)
-        playModel.firstPlayer!!.playerScore = playModel.firstPlayer!!.playerScore!!.minus(10)
+        playModel.secondPlayer!!.playerScore = playModel.secondPlayer!!.playerScore?.plus(10)
+        playModel.firstPlayer!!.playerScore = playModel.firstPlayer!!.playerScore?.minus(10)
         updateScore(playModel.secondPlayer!!, playModel.firstPlayer!!)
         playModel.isGameOver = true
         playModel.winner = playModel.SECOND_PLAYER

@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a3ticacoe.db.entities.PlayerDTO
-import com.example.tictactoe.Repository
+import com.example.tictactoe.db.Repository
 import com.example.tictactoe.app.play.PlayModel
 import com.example.tictactoe.app.player.PlayerItemModel
 import kotlinx.coroutines.Job
@@ -23,10 +23,6 @@ class ChooseCharacter2ViewModel(private val repository: Repository, private var 
     private var isExist = false
     private lateinit var currentPlayer : PlayerDTO
     private var secondPlayer: PlayerItemModel = PlayerItemModel()
-
-    fun getGameModel(): PlayModel{
-        return playModel
-    }
 
     fun submitData(){
         val name = inputName.value!!
@@ -57,6 +53,11 @@ class ChooseCharacter2ViewModel(private val repository: Repository, private var 
     fun validPlayerName(): Boolean {
         if(inputName.value.isNullOrEmpty()){
             invalidNotif.value = "Player name should not be empty!"
+            return false
+        }
+        else if(inputName.value.equals(playModel.firstPlayer!!.playerName)){
+            //Validasi kalau iseng input nama yg sama
+            invalidNotif.value = "Player Name cannot be the same as the previous player"
             return false
         }
         else{

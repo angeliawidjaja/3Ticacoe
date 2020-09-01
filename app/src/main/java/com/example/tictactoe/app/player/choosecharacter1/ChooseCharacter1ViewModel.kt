@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a3ticacoe.db.entities.PlayerDTO
-import com.example.tictactoe.Repository
+import com.example.tictactoe.db.Repository
 import com.example.tictactoe.app.play.PlayModel
 import com.example.tictactoe.app.player.PlayerItemModel
 import kotlinx.coroutines.Job
