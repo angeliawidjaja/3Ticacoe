@@ -17,9 +17,6 @@ interface PlayerDAO {
     @Query("SELECT * FROM player_table WHERE player_id != :playerId")
     fun getSectionTwoPlayers(playerId: Int) : LiveData<List<PlayerDTO>>
 
-    @Query("UPDATE player_table SET player_score = player_score + :winnerScore WHERE player_id = :winnerId")
-    suspend fun updateWinnerData(winnerScore: Int, winnerId: Int)
-
-    @Query("UPDATE player_table SET player_score = player_score + :loserScore WHERE player_id = :loserId")
-    suspend fun updateLoserData(loserScore: Int, loserId: Int)
+    @Query("UPDATE player_table SET player_score = player_score + :playerScore WHERE player_id = :playerId")
+    fun updateScoreData(playerScore: Int, playerId: Int)
 }

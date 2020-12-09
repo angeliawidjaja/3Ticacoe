@@ -105,7 +105,6 @@ class PlayViewModel(private val repository: Repository, private val playModel: P
     private fun handlePlayer1Win(){
         playModel.firstPlayer!!.playerScore = playModel.firstPlayer!!.playerScore?.plus(10)
         playModel.secondPlayer!!.playerScore = playModel.secondPlayer!!.playerScore?.minus(10)
-        updateScore(playModel.firstPlayer!!, playModel.secondPlayer!!)
         playModel.isGameOver = true
         playModel.winner = playModel.FIRST_PLAYER
     }
@@ -113,7 +112,6 @@ class PlayViewModel(private val repository: Repository, private val playModel: P
     private fun handlePlayer2Win(){
         playModel.secondPlayer!!.playerScore = playModel.secondPlayer!!.playerScore?.plus(10)
         playModel.firstPlayer!!.playerScore = playModel.firstPlayer!!.playerScore?.minus(10)
-        updateScore(playModel.secondPlayer!!, playModel.firstPlayer!!)
         playModel.isGameOver = true
         playModel.winner = playModel.SECOND_PLAYER
     }
@@ -124,20 +122,23 @@ class PlayViewModel(private val repository: Repository, private val playModel: P
     }
 
     private fun updateScore(winnerPlayer: PlayerItemModel, loserPlayer: PlayerItemModel){
-        viewModelScope.launch {
-            repository.updateWinnerScore(winnerPlayer.playerScore!!, winnerPlayer.playerId!!)
-            repository.updateLoserScore(loserPlayer.playerScore!!, loserPlayer.playerId!!)
-        }
+        repository.updateWinnerScore(winnerPlayer.playerScore!!, winnerPlayer.playerId!!)
+        repository.updateLoserScore(loserPlayer.playerScore!!, loserPlayer.playerId!!)
     }
 
-    fun resetGame(){
+    fun resetGameToPlay(){
         playModel.isGameOver = false
         playModel.roundCount = 1
         playModel.winner = null
         playModel.gameResultMessage = null
+        resetBoardCells()
+    }
+
+    fun resetGameToExit(){
+        resetGameToPlay()
+        updateScore(playModel.firstPlayer!!, playModel.secondPlayer!!)
         playModel.firstPlayer!!.playerScore = 0
         playModel.secondPlayer!!.playerScore = 0
-        resetBoardCells()
     }
 
     private fun resetBoardCells(){

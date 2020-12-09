@@ -15,11 +15,11 @@ class Repository(private val playerDAO: PlayerDAO) {
         playerDAO.insertNewPlayer(player)
     }
 
-    suspend fun updateWinnerScore(winnerScore:Int, winnerId: Int){
-        playerDAO.updateWinnerData(winnerScore, winnerId)
+    fun updateWinnerScore(winnerScore:Int, winnerId: Int){
+        playerDAO.updateScoreData(winnerScore, winnerId)
     }
 
-    suspend fun updateLoserScore(loserScore:Int, loserId: Int){
-        playerDAO.updateWinnerData(loserScore, loserId)
+    fun updateLoserScore(loserScore:Int, loserId: Int){
+        playerDAO.updateScoreData(loserScore, loserId)
     }
 }
